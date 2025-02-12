@@ -1,6 +1,15 @@
 import ProjectViewer from "@/components/ProjectViewer";
+import { Metadata } from "next";
 
 type CityNameType = Promise<{ cityName: string }>;
+
+export async function generateMetadata({ params }: { params: CityNameType }): Promise<Metadata>{
+    const { cityName } = await params;
+    
+    return {
+        title: `Projects in ${cityName}`,
+    }
+}
 
 const CityName = async ({ params }: { params: CityNameType }) => {
     const { cityName } = await params;
