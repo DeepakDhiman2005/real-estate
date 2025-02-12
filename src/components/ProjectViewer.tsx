@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useProjectsStore } from '@/store/useProjectStore';
 import MapComponent from './MapComponent';
 import ProjectCard from './ProjectCard';
+import axios from 'axios';
 // import ProjectCard from '../../components/ProjectCard';
 
 const ProjectViewer = ({ cityName }: { cityName: string }) => {
@@ -20,11 +21,17 @@ const ProjectViewer = ({ cityName }: { cityName: string }) => {
             setIsLoader(true);
             const response = await fetch(`http://localhost:3000/api/scrape?cityName=${cityName}`);
             const data = await response.json();
-
-            for (const project of data) {
-                // const geoRes = await axios.get(`${baseUrl}/api/geocode?location=${project.location}`);
-                // addProject({ ...project, coords: geoRes.data });
-                addProject({ ...project });
+            try {
+                for (const project of data) {
+                    const geoRes = await axios.get(`http://localhost:3000/api/geocode?location=${project.location}`);
+                    addProject({ ...project, coordinates: geoRes.data?.coordinates });
+                    // addProject({ ...project });
+                }
+            } catch (error) {
+                console.log('geo location failed', error);
+                for (const project of data) {
+                    addProject({ ...project });
+                }
             }
             setIsLoader(false);
         };
