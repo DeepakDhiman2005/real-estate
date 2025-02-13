@@ -19,6 +19,13 @@
     .image {
         width: 80%;
         height: auto;
+        border-radius: 6px;
+        overflow: hidden;
+        height: 100%;
+
+        img {
+            object-fit: cover;
+        }
     }
 
     .right {

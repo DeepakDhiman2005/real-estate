@@ -31,6 +31,7 @@ export async function GET(req: NextRequest) {
             return {
                 image: $(elem).find('img').attr('data-src')?.trim(),
                 projectName: $(elem).find('.mghome__prjblk__prjname').text().trim(),
+                href: $(elem).find('.mghome__prjblk__prjname').attr('href')?.trim(),
                 location: $(elem).find('.mghome__prjblk__locname').text().trim(),
                 price: $(elem).find('.mghome__prjblk__price').text().trim(),
                 builderName: $(elem).find('.mghome__prjblk__bhk').text().trim(),
